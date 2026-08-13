@@ -1,7 +1,36 @@
-const products = async (limit = 16) => {
-  const response = await fetch("https://dummyjson.com/products?limit=" + limit);
-  const data = await response.json();
-  return data;
+const products = async (limit = 12, skip = 0, category = "") => {
+  const categoryPath = category
+    ? `/category/${encodeURIComponent(category)}`
+    : "";
+  const response = await fetch(
+    `https://dummyjson.com/products${categoryPath}?limit=${limit}&skip=${skip}&select=id,title,category,price,rating,thumbnail`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Unable to load products.");
+  }
+
+  return response.json();
+};
+
+const productCategories = async () => {
+  const response = await fetch("https://dummyjson.com/products/categories");
+
+  if (!response.ok) {
+    throw new Error("Unable to load product categories.");
+  }
+
+  return response.json();
+};
+
+const product = async (id) => {
+  const response = await fetch(`https://dummyjson.com/products/${id}`);
+
+  if (!response.ok) {
+    throw new Error("Unable to load product details.");
+  }
+
+  return response.json();
 };
 
 const featuredProducts = async () => {
@@ -30,4 +59,4 @@ const featuredProducts = async () => {
     .map((product) => ({ ...product, image: product.thumbnail }));
 };
 
-export { products, featuredProducts };
+export { products, product, productCategories, featuredProducts };

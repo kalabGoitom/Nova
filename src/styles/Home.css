@@ -1,7 +1,7 @@
 #hero-section {
-  height: 600px;
+  min-height: 640px;
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.342), rgba(0, 0, 0, 0.333)),
+    linear-gradient(90deg, rgba(18, 18, 18, 0.78), rgba(18, 18, 18, 0.35)),
     url("../assets/hero.jpg");
   background-size: cover;
   background-position: center;
@@ -12,37 +12,62 @@
 
 #hero-section .container {
   display: flex;
-  justify-content: center;
-  align-items: start;
-  gap: 20px;
+  align-items: center;
   flex-direction: column;
 }
 
+.hero-content {
+  width: min(100%, 800px);
+  margin-right: auto;
+  padding-top: 6rem;
+  color: var(--surface);
+}
+
+.hero-eyebrow {
+  margin-bottom: 1rem;
+  color: #f4c6a7;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08rem;
+  text-transform: uppercase;
+}
+
 #hero-section h1 {
-  font-size: 2.5rem;
+  max-width: 12ch;
+  margin-bottom: 1rem;
+  font-size: 4.25rem;
+  line-height: 1.05;
 }
 
-#hero-section p {
-  font-size: 1.5rem;
-  color: var(--text-secondary);
-}
-
-#hero-section button {
-  background-color: var(--accent);
+.hero-description {
+  max-width: 38rem;
+  margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.85);
   font-size: 1.2rem;
-  padding: 0.35rem 1rem;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  cursor: pointer;
-  transition: all linear 0.3s;
+  line-height: 1.6;
 }
 
-#hero-section button:hover {
+.hero-cta {
+  display: inline-block;
+  padding: 0.8rem 1.25rem;
+  border-radius: 6px;
+  background-color: var(--accent);
+  color: var(--surface);
+  font-size: 1rem;
+  font-weight: 700;
+  transition:
+    transform 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.hero-cta:hover {
+  background-color: #ad5624;
   transform: translateY(-2px);
 }
 
-#hero-section button a {
-  color: var(--surface);
+.hero-cta:focus-visible {
+  outline: 3px solid var(--surface);
+  outline-offset: 4px;
 }
 
 #categories-section {
@@ -189,7 +214,9 @@
   border-radius: 8px;
   background-color: var(--surface);
   box-shadow: 0 4px 14px rgba(23, 23, 23, 0.06);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .product-card a {
@@ -245,10 +272,26 @@
 @media screen and (max-width: 750px) {
   #hero-section {
     justify-content: center;
+    min-height: 560px;
+    background-image:
+      linear-gradient(rgba(18, 18, 18, 0.62), rgba(18, 18, 18, 0.62)),
+      url("../assets/hero.jpg");
   }
 
   #hero-section .container {
     align-items: center;
+  }
+
+  .hero-content {
+    margin-right: 0;
+    padding-top: 3.5rem;
+    text-align: center;
+  }
+
+  #hero-section h1 {
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 3.25rem;
   }
 
   .categories-grid {
@@ -261,6 +304,18 @@
 }
 
 @media screen and (max-width: 500px) {
+  #hero-section {
+    min-height: 500px;
+  }
+
+  #hero-section h1 {
+    font-size: 2.6rem;
+  }
+
+  .hero-description {
+    font-size: 1.05rem;
+  }
+
   #categories-section {
     padding: 3.5rem 0;
   }

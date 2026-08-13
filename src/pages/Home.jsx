@@ -46,11 +46,16 @@ function Home() {
     <main>
       <section id="hero-section">
         <div className="container">
-          <h1> Discover something new. </h1>
-          <p> Everything you need, all in one place.</p>
-          <button>
-            <NavLink to={"/store"}>Shop now</NavLink>
-          </button>
+          <div className="hero-content">
+            <p className="hero-eyebrow">NOVA essentials</p>
+            <h1>Discover something new.</h1>
+            <p className="hero-description">
+              Everything you need, all in one place.
+            </p>
+            <NavLink className="hero-cta" to="/store">
+              Shop now
+            </NavLink>
+          </div>
         </div>
       </section>
 

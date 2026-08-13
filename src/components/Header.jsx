@@ -8,26 +8,27 @@ import {
   faBars,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import { useCart } from "../context/useCart";
+import { useAuth } from "../context/AuthContext";
 
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { itemCount } = useCart();
+  const { isAuthenticated } = useAuth();
 
   const toggleMenu = () => setMobileMenuOpen(!mobileMenuOpen);
   const closeMenu = () => setMobileMenuOpen(false);
+
   return (
     <>
       <header className={mobileMenuOpen ? "close" : "open"}>
         <div className="container">
           <nav>
-            {/* Logo container */}
             <div className="logo-container">
               <Link to={"/"}>
-                {" "}
                 <img src={logoUrl} alt="NOVA E-commerece logo" />
               </Link>
             </div>
-
-            {/* links container */}
 
             <div className="link-container links-container">
               <NavLink
@@ -44,28 +45,22 @@ function Header() {
               >
                 Store
               </NavLink>
+
               <NavLink
-                to={"/catagories"}
-                className={({ isActive }) => (isActive ? "active" : "")}
+                aria-label={`Cart, ${itemCount} items`}
+                className="cart-link"
+                to={"/cart"}
               >
-                Catagories
-              </NavLink>
-            </div>
-
-            {/* Cart and login link container */}
-
-            <div className="cart-link-container links-container">
-              <NavLink to={"/cart"}>
-                {" "}
                 <FontAwesomeIcon icon={faCartShopping} />
+                {itemCount > 0 && (
+                  <span className="cart-count">{itemCount}</span>
+                )}
               </NavLink>
-              <NavLink to={"/login"}>
-                {" "}
+              <NavLink to={isAuthenticated ? "/account" : "/login"}>
                 <FontAwesomeIcon icon={faUser} />
               </NavLink>
             </div>
 
-            {/* Mobile menu toggle button*/}
             <button className="menu-btn" onClick={toggleMenu}>
               <FontAwesomeIcon icon={faBars} />
             </button>
@@ -77,7 +72,6 @@ function Header() {
         <div className="conatiner">
           <div className="logo-container">
             <Link to={"/"}>
-              {" "}
               <img src={logoUrl} alt="NOVA E-commerece logo" />
             </Link>
 
@@ -92,27 +86,37 @@ function Header() {
               className={({ isActive, isPending }) =>
                 isPending ? "pending" : isActive ? "active" : ""
               }
+              onClick={closeMenu}
             >
               Home
             </NavLink>
             <NavLink
               to={"/store"}
               className={({ isActive }) => (isActive ? "active" : "")}
+              onClick={closeMenu}
             >
               Store
             </NavLink>
             <NavLink
               to={"/catagories"}
               className={({ isActive }) => (isActive ? "active" : "")}
+              onClick={closeMenu}
             >
               Catagories
             </NavLink>
-            <NavLink to={"/cart"}>
-              {" "}
+            <NavLink
+              aria-label={`Cart, ${itemCount} items`}
+              className="cart-link"
+              to={"/cart"}
+              onClick={closeMenu}
+            >
               <FontAwesomeIcon icon={faCartShopping} />
+              {itemCount > 0 && <span className="cart-count">{itemCount}</span>}
             </NavLink>
-            <NavLink to={"/login"}>
-              {" "}
+            <NavLink
+              to={isAuthenticated ? "/account" : "/login"}
+              onClick={closeMenu}
+            >
               <FontAwesomeIcon icon={faUser} />
             </NavLink>
           </div>
