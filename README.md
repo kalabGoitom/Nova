@@ -1,18 +1,124 @@
-# React + Vite
+# NOVA
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+NOVA is a responsive e-commerce storefront built with React and Vite. It includes a product catalog, category browsing, cart management, fake authentication, protected account access, and a simulated checkout flow.
 
-Currently, two official plugins are available:
+The app pulls product data from DummyJSON and is designed as a frontend portfolio project with a polished shopping experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Responsive landing page
+- Product listing and category filtering
+- Product sorting
+- Product detail pages
+- Cart with quantity updates and total calculation
+- Fake login and sign up flow
+- LocalStorage-based fake auth token
+- Protected account and checkout verification pages
+- Offline/online connection status banner
+- Loading placeholders for home and product pages
+- 404 page for unknown routes
+- Mobile-friendly navigation and footer links
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Tech Stack
 
-Note: This will impact Vite dev & build performances.
+- React
+- Vite
+- JavaScript
+- React Router
+- CSS
+- DummyJSON API
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Run the app locally
+
+```bash
+npm run dev
+```
+
+### 3. Build for production
+
+```bash
+npm run build
+```
+
+## Project Structure
+
+```text
+src/
+├── api/
+│   └── api.js
+├── assets/
+├── components/
+│   ├── ConnectionStatus.jsx
+│   ├── Footer.jsx
+│   ├── Header.jsx
+│   ├── ProtectedRoute.jsx
+│   └── ...
+├── context/
+│   ├── AuthContext.jsx
+│   ├── CartContext.js
+│   ├── CartContext.jsx
+│   └── useCart.js
+├── pages/
+│   ├── Account.jsx
+│   ├── Cart.jsx
+│   ├── CheckoutVerification.jsx
+│   ├── Home.jsx
+│   ├── Login.jsx
+│   ├── NotFound.jsx
+│   ├── ProductDetails.jsx
+│   ├── Signup.jsx
+│   └── product.jsx
+├── styles/
+│   ├── Auth.css
+│   ├── Cart.css
+│   ├── ConnectionStatus.css
+│   ├── Footer.css
+│   ├── Home.css
+│   ├── Nav.css
+│   ├── ProductDetails.css
+│   └── products.css
+├── App.jsx
+├── index.css
+├── main.jsx
+└── ...
+```
+
+## Fake Authentication
+
+This project includes a demo authentication system using localStorage.
+
+- A fake token is created on login/signup
+- The token is stored in localStorage
+- Protected routes redirect users to the login page when they are not authenticated
+- The account page and checkout verification page are protected
+
+## Checkout Flow
+
+The checkout flow is simulated for demo purposes:
+
+- If the user is not logged in, checkout redirects to the login page
+- Once authenticated, the order is verified
+- A fake verification record is stored locally
+- The cart is cleared after checkout
+
+## API
+
+Product data is sourced from DummyJSON:
+
+https://dummyjson.com/
+
+## Notes
+
+This is a frontend demo project intended for learning and portfolio use. It simulates authentication and checkout behavior without a real backend or database.
+
+## License
+
+This project is for educational/demo purposes.
