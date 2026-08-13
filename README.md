@@ -115,6 +115,10 @@ Product data is sourced from DummyJSON:
 
 https://dummyjson.com/
 
+## Live Demo
+
+[NOVA - Live Demo](https://nova-store-v1.vercel.app/)
+
 ## Notes
 
 This is a frontend demo project intended for learning and portfolio use. It simulates authentication and checkout behavior without a real backend or database.
