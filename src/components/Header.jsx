@@ -97,13 +97,7 @@ function Header() {
             >
               Store
             </NavLink>
-            <NavLink
-              to={"/catagories"}
-              className={({ isActive }) => (isActive ? "active" : "")}
-              onClick={closeMenu}
-            >
-              Catagories
-            </NavLink>
+
             <NavLink
               aria-label={`Cart, ${itemCount} items`}
               className="cart-link"

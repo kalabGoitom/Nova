@@ -55,7 +55,7 @@ const featuredProducts = async () => {
       categories.add(product.category);
       return true;
     })
-    .slice(0, 8)
+    .slice(0, 16)
     .map((product) => ({ ...product, image: product.thumbnail }));
 };
 

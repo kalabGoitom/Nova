@@ -118,9 +118,20 @@ function Home() {
           </div>
 
           <div className="featured-products-grid">
-            {isLoadingProducts && (
-              <p className="products-message">Loading featured products...</p>
-            )}
+            {isLoadingProducts &&
+              Array.from({ length: 4 }, (_, index) => (
+                <article
+                  className="product-card product-card-placeholder"
+                  key={index}
+                >
+                  <div className="product-image-placeholder" />
+                  <div className="product-detail-placeholder">
+                    <span className="placeholder-line short" />
+                    <span className="placeholder-line medium" />
+                    <span className="placeholder-line full" />
+                  </div>
+                </article>
+              ))}
 
             {productsError && (
               <p className="products-message">
@@ -131,19 +142,19 @@ function Home() {
             {!isLoadingProducts &&
               !productsError &&
               featuredProducts.map((product) => (
-              <article className="product-card" key={product.id}>
-                <NavLink to={`/products/${product.id}`}>
-                  <img src={product.image} alt={product.title} />
-                  <div className="product-details">
-                    <p>{product.category}</p>
-                    <h3>{product.title}</h3>
-                    <div className="product-meta">
-                      <span>${product.price.toFixed(2)}</span>
-                      <small>{product.rating.toFixed(1)} / 5</small>
+                <article className="product-card" key={product.id}>
+                  <NavLink to={`/products/${product.id}`}>
+                    <img src={product.image} alt={product.title} />
+                    <div className="product-details">
+                      <p>{product.category}</p>
+                      <h3>{product.title}</h3>
+                      <div className="product-meta">
+                        <span>${product.price.toFixed(2)}</span>
+                        <small>{product.rating.toFixed(1)} / 5</small>
+                      </div>
                     </div>
-                  </div>
-                </NavLink>
-              </article>
+                  </NavLink>
+                </article>
               ))}
           </div>
         </div>

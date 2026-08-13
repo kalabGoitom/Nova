@@ -4,15 +4,19 @@ import { productCategories, products as getProducts } from "../api/api";
 
 const PAGE_SIZE = 12;
 
-function Products() {
+function Products({ defaultCategory = "" }) {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(defaultCategory);
   const [sortBy, setSortBy] = useState("featured");
+
+  useEffect(() => {
+    setCategory(defaultCategory);
+  }, [defaultCategory]);
 
   useEffect(() => {
     let mounted = true;
@@ -29,7 +33,8 @@ function Products() {
           setTotal(data.total);
         }
       } catch {
-        if (mounted) setError("Products could not be loaded. Please try again.");
+        if (mounted)
+          setError("Products could not be loaded. Please try again.");
       } finally {
         if (mounted) setLoading(false);
       }
@@ -50,7 +55,9 @@ function Products() {
         const data = await productCategories();
 
         if (mounted) {
-          setCategories(data.map((item) => (typeof item === "string" ? item : item.slug)));
+          setCategories(
+            data.map((item) => (typeof item === "string" ? item : item.slug)),
+          );
         }
       } catch {
         // The store remains usable when the optional category list is unavailable.
@@ -117,7 +124,12 @@ function Products() {
             <fieldset className="filter-group">
               <legend>Categories</legend>
               <label>
-                <input checked={!category} name="category" onChange={() => setCategory("")} type="radio" />
+                <input
+                  checked={!category}
+                  name="category"
+                  onChange={() => setCategory("")}
+                  type="radio"
+                />
                 <span>All categories</span>
               </label>
               {categories.map((item) => (
@@ -136,10 +148,17 @@ function Products() {
 
           <div className="catalog-content">
             <div className="catalog-toolbar">
-              <p>{loading ? "Loading products..." : `${displayedProducts.length} products shown`}</p>
+              <p>
+                {loading
+                  ? "Loading products..."
+                  : `${displayedProducts.length} products shown`}
+              </p>
               <label className="sort-control">
                 Sort by
-                <select onChange={(event) => setSortBy(event.target.value)} value={sortBy}>
+                <select
+                  onChange={(event) => setSortBy(event.target.value)}
+                  value={sortBy}
+                >
                   <option value="featured">Featured</option>
                   <option value="price-low">Price: low to high</option>
                   <option value="price-high">Price: high to low</option>
@@ -151,37 +170,49 @@ function Products() {
             {error && <p className="catalog-message">{error}</p>}
 
             <div className="catalog-grid">
-              {loading && Array.from({ length: PAGE_SIZE }, (_, index) => (
-                <article className="catalog-product-placeholder" key={index}>
-                  <div className="catalog-image-placeholder" />
-                  <div className="catalog-copy-placeholder"><span /><strong /><em /></div>
-                </article>
-              ))}
-
-              {!loading && displayedProducts.map((product) => (
-                <article className="catalog-product" key={product.id}>
-                  <NavLink to={`/products/${product.id}`}>
-                    <img alt={product.title} src={product.thumbnail} />
-                    <div className="catalog-product-details">
-                      <p>{product.category}</p>
-                      <h2>{product.title}</h2>
-                      <div>
-                        <strong>${product.price.toFixed(2)}</strong>
-                        <span>{product.rating.toFixed(1)} / 5</span>
-                      </div>
+              {loading &&
+                Array.from({ length: PAGE_SIZE }, (_, index) => (
+                  <article className="catalog-product-placeholder" key={index}>
+                    <div className="catalog-image-placeholder" />
+                    <div className="catalog-copy-placeholder">
+                      <span />
+                      <strong />
+                      <em />
                     </div>
-                  </NavLink>
-                </article>
-              ))}
+                  </article>
+                ))}
+
+              {!loading &&
+                displayedProducts.map((product) => (
+                  <article className="catalog-product" key={product.id}>
+                    <NavLink to={`/products/${product.id}`}>
+                      <img alt={product.title} src={product.thumbnail} />
+                      <div className="catalog-product-details">
+                        <p>{product.category}</p>
+                        <h2>{product.title}</h2>
+                        <div>
+                          <strong>${product.price.toFixed(2)}</strong>
+                          <span>{product.rating.toFixed(1)} / 5</span>
+                        </div>
+                      </div>
+                    </NavLink>
+                  </article>
+                ))}
             </div>
 
             {!loading && !error && displayedProducts.length === 0 && (
-              <p className="catalog-message">No products found in this category.</p>
+              <p className="catalog-message">
+                No products found in this category.
+              </p>
             )}
 
             {products.length < total && (
               <div className="load-more-wrap">
-                <button disabled={loadingMore} onClick={handleLoadMore} type="button">
+                <button
+                  disabled={loadingMore}
+                  onClick={handleLoadMore}
+                  type="button"
+                >
                   {loadingMore ? "Loading..." : "Load more products"}
                 </button>
               </div>

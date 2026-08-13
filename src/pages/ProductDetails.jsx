@@ -45,7 +45,20 @@ function ProductDetails() {
   if (!product) {
     return (
       <main className="product-details-page">
-        <div className="container details-message">Loading product...</div>
+        <div className="container">
+          <div className="skeleton-details-layout">
+            <div className="skeleton-gallery" />
+            <div className="skeleton-info">
+              <span className="skeleton-line short" />
+              <span className="skeleton-line tall" />
+              <span className="skeleton-line medium" />
+              <span className="skeleton-line large" />
+              <span className="skeleton-line full" />
+              <span className="skeleton-line full" />
+              <span className="skeleton-button" />
+            </div>
+          </div>
+        </div>
       </main>
     );
   }
@@ -53,7 +66,9 @@ function ProductDetails() {
   return (
     <main className="product-details-page">
       <div className="container">
-        <NavLink className="back-to-products" to="/products">Back to products</NavLink>
+        <NavLink className="back-to-products" to="/products">
+          Back to products
+        </NavLink>
 
         <section className="product-details-layout">
           <div className="product-gallery">
@@ -61,15 +76,21 @@ function ProductDetails() {
           </div>
 
           <div className="product-information">
-            <p className="product-category">{product.category.replaceAll("-", " ")}</p>
+            <p className="product-category">
+              {product.category.replaceAll("-", " ")}
+            </p>
             <h1>{product.title}</h1>
-            <p className="product-rating">{product.rating.toFixed(1)} / 5 rating</p>
+            <p className="product-rating">
+              {product.rating.toFixed(1)} / 5 rating
+            </p>
             <p className="product-price">${product.price.toFixed(2)}</p>
             <p className="product-description">{product.description}</p>
             <p className="product-stock">
               {product.availabilityStatus || `${product.stock} items in stock`}
             </p>
-            <button onClick={() => addItem(product)} type="button">Add to cart</button>
+            <button onClick={() => addItem(product)} type="button">
+              Add to cart
+            </button>
           </div>
         </section>
       </div>
