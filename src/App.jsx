@@ -5,9 +5,10 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Account from "./pages/Account";
+import CheckoutVerification from "./pages/CheckoutVerification";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
-import { CartProvider } from "./context/CartContext";
+import { CartProvider } from "./context/CartContext.jsx";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -38,6 +39,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Account />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/checkout/verification"
+              element={
+                <ProtectedRoute>
+                  <CheckoutVerification />
                 </ProtectedRoute>
               }
             />
