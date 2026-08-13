@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,15 +7,41 @@ import {
   faCouch,
   faSpa,
 } from "@fortawesome/free-solid-svg-icons";
-
-const featuredProducts = Array.from({ length: 8 }, (_, index) => ({
-  id: index + 1,
-  name: `Featured Product ${index + 1}`,
-  category: "Product category",
-  price: "$00.00",
-}));
+import { featuredProducts as fetchFeaturedProducts } from "../api/api";
 
 function Home() {
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [isLoadingProducts, setIsLoadingProducts] = useState(true);
+  const [productsError, setProductsError] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadFeaturedProducts = async () => {
+      try {
+        const products = await fetchFeaturedProducts();
+
+        if (isMounted) {
+          setFeaturedProducts(products);
+        }
+      } catch {
+        if (isMounted) {
+          setProductsError(true);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoadingProducts(false);
+        }
+      }
+    };
+
+    loadFeaturedProducts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <main>
       <section id="hero-section">
@@ -86,16 +113,33 @@ function Home() {
           </div>
 
           <div className="featured-products-grid">
-            {featuredProducts.map((product) => (
+            {isLoadingProducts && (
+              <p className="products-message">Loading featured products...</p>
+            )}
+
+            {productsError && (
+              <p className="products-message">
+                Featured products could not be loaded.
+              </p>
+            )}
+
+            {!isLoadingProducts &&
+              !productsError &&
+              featuredProducts.map((product) => (
               <article className="product-card" key={product.id}>
-                <div className="product-image-placeholder">Product image</div>
-                <div className="product-details">
-                  <p>{product.category}</p>
-                  <h3>{product.name}</h3>
-                  <span>{product.price}</span>
-                </div>
+                <NavLink to={`/products/${product.id}`}>
+                  <img src={product.image} alt={product.title} />
+                  <div className="product-details">
+                    <p>{product.category}</p>
+                    <h3>{product.title}</h3>
+                    <div className="product-meta">
+                      <span>${product.price.toFixed(2)}</span>
+                      <small>{product.rating.toFixed(1)} / 5</small>
+                    </div>
+                  </div>
+                </NavLink>
               </article>
-            ))}
+              ))}
           </div>
         </div>
       </section>
